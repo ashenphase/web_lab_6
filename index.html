@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основы JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Основы JavaScript</h1>
+            <p>Введите значения и нажмите кнопку, чтобы получить результат.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>Возведение в степень</h2>
+            <p>Вычисление x в степени n с помощью цикла. Показатель n — целое число от 1.</p>
+            <form onsubmit="calculatePower(); return false;">
+                <div class="fields">
+                    <label for="power-x">Основание x
+                        <input id="power-x" type="number" step="any" value="2" required>
+                    </label>
+                    <label for="power-n">Показатель n
+                        <input id="power-n" type="number" min="1" max="10000" step="1" value="3" required>
+                    </label>
+                </div>
+                <p class="hint">Показатель ограничен 10 000, чтобы расчёт не замедлял страницу.</p>
+                <button type="submit">Вычислить степень</button>
+            </form>
+            <p class="result" id="power-result" role="status">Результат: 8</p>
+        </section>
+
+        <section>
+            <h2>Наибольший общий делитель</h2>
+            <p>НОД двух целых неотрицательных чисел по алгоритму Евклида.</p>
+            <form onsubmit="calculateGcd(); return false;">
+                <div class="fields">
+                    <label for="gcd-a">Число a
+                        <input id="gcd-a" type="number" min="0" max="9007199254740991" step="1" value="24" required>
+                    </label>
+                    <label for="gcd-b">Число b
+                        <input id="gcd-b" type="number" min="0" max="9007199254740991" step="1" value="18" required>
+                    </label>
+                </div>
+                <button type="submit">Найти НОД</button>
+            </form>
+            <p class="result" id="gcd-result" role="status">Результат: 6</p>
+        </section>
+
+        <section>
+            <h2>Наименьшая цифра</h2>
+            <p>Поиск самой маленькой цифры в целом неотрицательном числе.</p>
+            <form onsubmit="calculateMinDigit(); return false;">
+                <label for="digit-x">Число x
+                    <input id="digit-x" type="number" min="0" max="9007199254740991" step="1" value="5832" required>
+                </label>
+                <button type="submit">Найти цифру</button>
+            </form>
+            <p class="result" id="digit-result" role="status">Результат: 2</p>
+        </section>
+
+        <section>
+            <h2>Склонение слов</h2>
+            <p>Выбор правильной формы: 1 запись, 2 записи, 5 записей.</p>
+            <form onsubmit="calculateRecords(); return false;">
+                <label for="records-n">Количество записей n
+                    <input id="records-n" type="number" min="0" max="9007199254740991" step="1" value="21" required>
+                </label>
+                <button type="submit">Показать фразу</button>
+            </form>
+            <p class="result" id="records-result" role="status">В результате выполнения запроса была найдена 21 запись</p>
+        </section>
+
+        <section>
+            <h2>Числа Фибоначчи</h2>
+            <p>Каждое следующее число равно сумме двух предыдущих. F(0) = 0, F(1) = 1.</p>
+            <form onsubmit="calculateFibonacci(); return false;">
+                <label for="fibonacci-n">Номер n (от 0 до 1000)
+                    <input id="fibonacci-n" type="number" min="0" max="1000" step="1" value="10" required>
+                </label>
+                <button type="submit">Найти число</button>
+            </form>
+            <p class="result" id="fibonacci-result" role="status">Результат: 55</p>
+        </section>
+    </main>
+
+    <script>
+        function pow(x, n) {
+            var result = 1;
+            for (var i = 0; i < n; i++) {
+                result = result * x;
+            }
+            return result;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                var remainder = a % b;
+                a = b;
+                b = remainder;
+            }
+            return a;
+        }
+
+        function minDigit(x) {
+            var digits = String(x).split("");
+            var minimum = 9;
+            for (var i = 0; i < digits.length; i++) {
+                var digit = Number(digits[i]);
+                if (digit < minimum) {
+                    minimum = digit;
+                }
+            }
+            return minimum;
+        }
+
+        function pluralizeRecords(n) {
+            var lastDigit = n % 10;
+            var lastTwoDigits = n % 100;
+            var words = "было найдено " + n + " записей";
+
+            if (lastTwoDigits < 11 || lastTwoDigits > 14) {
+                if (lastDigit === 1) {
+                    words = "была найдена " + n + " запись";
+                } else if (lastDigit >= 2 && lastDigit <= 4) {
+                    words = "были найдены " + n + " записи";
+                }
+            }
+            return "В результате выполнения запроса " + words;
+        }
+
+        function fibb(n) {
+            var previous = 0n;
+            var current = 1n;
+            for (var i = 0; i < n; i++) {
+                var next = previous + current;
+                previous = current;
+                current = next;
+            }
+            return previous;
+        }
+
+        // проверка целых чисел
+        function isNonNegativeInteger(number) {
+            return Number.isSafeInteger(number) && number >= 0;
+        }
+
+        function calculatePower() {
+            var x = Number(document.getElementById("power-x").value);
+            var n = Number(document.getElementById("power-n").value);
+            var output = document.getElementById("power-result");
+            if (!Number.isFinite(x) || !Number.isInteger(n) || n < 1 || n > 10000) {
+                output.textContent = "Введите число x и целый показатель от 1 до 10 000.";
+                return;
+            }
+            var result = pow(x, n);
+            if (!Number.isFinite(result)) {
+                output.textContent = "Результат слишком большой. Уменьшите значения.";
+                return;
+            }
+            output.textContent = "Результат: " + result;
+        }
+
+        function calculateGcd() {
+            var a = Number(document.getElementById("gcd-a").value);
+            var b = Number(document.getElementById("gcd-b").value);
+            var output = document.getElementById("gcd-result");
+            if (!isNonNegativeInteger(a) || !isNonNegativeInteger(b)) {
+                output.textContent = "Введите целые неотрицательные числа не больше 9 007 199 254 740 991.";
+                return;
+            }
+            if (a === 0 && b === 0) {
+                output.textContent = "НОД двух нулей не определён.";
+                return;
+            }
+            output.textContent = "Результат: " + gcd(a, b);
+        }
+
+        function calculateMinDigit() {
+            var x = Number(document.getElementById("digit-x").value);
+            var output = document.getElementById("digit-result");
+            if (!isNonNegativeInteger(x)) {
+                output.textContent = "Введите целое неотрицательное число не больше 9 007 199 254 740 991.";
+                return;
+            }
+            output.textContent = "Результат: " + minDigit(x);
+        }
+
+        function calculateRecords() {
+            var n = Number(document.getElementById("records-n").value);
+            var output = document.getElementById("records-result");
+            if (!isNonNegativeInteger(n)) {
+                output.textContent = "Введите целое неотрицательное число не больше 9 007 199 254 740 991.";
+                return;
+            }
+            output.textContent = pluralizeRecords(n);
+        }
+
+        function calculateFibonacci() {
+            var n = Number(document.getElementById("fibonacci-n").value);
+            var output = document.getElementById("fibonacci-result");
+            if (!Number.isInteger(n) || n < 0 || n > 1000) {
+                output.textContent = "Введите целое число от 0 до 1000.";
+                return;
+            }
+            output.textContent = "Результат: " + fibb(n).toString();
+        }
+
+        // результаты для начальных значений при открытии страницы.
+        calculatePower();
+        calculateGcd();
+        calculateMinDigit();
+        calculateRecords();
+        calculateFibonacci();
+    </script>
+</body>
+</html>

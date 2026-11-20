@@ -1,0 +1,134 @@
+:root {
+    --color-white: #fff;
+    --color-text: #282828;
+    --color-yellow: #ffdc42;
+    --color-border: #d7d7d7;
+    --color-input-border: #888;
+    --color-button-border: #a88a13;
+    --color-button-hover: #f4ca21;
+    --color-result-background: #fff7cf;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--color-white);
+    color: var(--color-text);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+header {
+    padding: 28px 0;
+    background: var(--color-yellow);
+    border-radius: 0 0 20px 20px;
+}
+
+h1 {
+    margin: 8px 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 6px 0;
+}
+
+main {
+    padding-top: 24px;
+}
+
+section {
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-top: 5px solid var(--color-yellow);
+    border-radius: 16px;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+}
+
+.fields {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+input {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    margin-top: 6px;
+    padding: 9px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 8px;
+    font: inherit;
+}
+
+button {
+    padding: 10px 18px;
+    border: 1px solid var(--color-button-border);
+    border-radius: 10px;
+    background: var(--color-yellow);
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--color-button-hover);
+}
+
+input:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
+}
+
+.hint {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.result {
+    margin: 18px 0 0;
+    padding: 12px;
+    background: var(--color-result-background);
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 500px) {
+    section {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .fields {
+        display: block;
+    }
+
+    input {
+        width: 100%;
+    }
+}
